@@ -17,7 +17,7 @@ Project Purpose : to scrape and explore programming cheatsheets from ShortcutFoo
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/cheatsheet-scraper.git
+git clone https://github.com/viraj-sh/ShortcutFoo-Cheatsheet-Scraper.git
 cd cheatsheet-scraper
 ```
 
@@ -79,14 +79,14 @@ graph TD
 ```
 
 ## Future Updates 🔮
-- **GUI Application**: Develop a graphical interface for easier navigation
+- **GUI Dashboard**: Develop a graphical dashboard for easier navigation
 - **PDF Export**: Add professional PDF export option
 - **Auto-update**: Periodic checks for updated cheatsheets
 - **Search Enhancement**: Full-text search within cheatsheets
 - **Tagging System**: Organize cheatsheets by categories and tags
-- **Mobile App**: Create a mobile-friendly version for quick reference
 - **Offline Mode**: Package cheatsheets for offline access
 - **Customization**: Allow users to create custom cheatsheet bundles
+
 
 ## Disclaimer ⚠️
 This project is intended for **educational purposes only**. All cheatsheet content belongs to [ShortcutFoo.com](https://www.shortcutfoo.com) and is used in accordance with their publicly accessible content policy. 
@@ -108,9 +108,6 @@ Contributions are welcome! Please open an issue first to discuss what you'd like
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a pull request
 
-## License 📄
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
 
-Made with Python. 🐍
+Made with Python 🐍
