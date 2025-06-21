@@ -18,7 +18,7 @@ Project Purpose : to scrape and explore programming cheatsheets from ShortcutFoo
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/viraj-sh/ShortcutFoo-Cheatsheet-Scraper.git
-cd cheatsheet-scraper
+cd ShortcutFoo-Cheatsheet-Scraper
 ```
 
 ### 2. Create and activate virtual environment
