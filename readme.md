@@ -1,7 +1,3 @@
-Here is your updated, clean, minimal, and professional `README.md` for the project:
-
----
-
 # ShortcutFoo Cheatsheet Scraper & Dashboard
 
 A minimal and extensible tool for accessing developer cheatsheets from [ShortcutFoo.com](https://www.shortcutfoo.com). This project enables you to browse, search, and download well-formatted keyboard shortcuts for various tools and technologies — all within a web-based dashboard.
