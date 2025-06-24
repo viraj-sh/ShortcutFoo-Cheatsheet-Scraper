@@ -2,6 +2,8 @@
 
 A minimal and extensible tool for accessing developer cheatsheets from [ShortcutFoo.com](https://www.shortcutfoo.com). This project enables you to browse, search, and download well-formatted keyboard shortcuts for various tools and technologies — all within a web-based dashboard.
 
+**Dashboard:** [https://shortcutfoo-cheatsheet.streamlit.app](https://shortcutfoo-cheatsheet.streamlit.app)
+
 While all data is already scraped and included in the repository, the scraping script is provided in case you want to run it manually or maintain a local version.
 
 ---
@@ -94,7 +96,7 @@ This will:
 
 ---
 
-## Future Improvements
+## Next Steps
 
 * ~~Web dashboard for browsing and downloads~~
 * Improved visuals and responsiveness
