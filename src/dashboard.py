@@ -73,23 +73,59 @@ def get_placeholder_description(name):
     return f"Keyboard shortcuts and commands for {name}."
 
 def generate_html_content(cheatsheet, dojo_name):
-    html = f"""
-    <html><head><style>
-        body {{ font-family: sans-serif; background: #121212; color: #e0e0e0; padding: 24px; }}
-        h1 {{ color: #4a90e2; border-bottom: 1px solid #50e3c2; }}
-        h2 {{ color: #50e3c2; margin-top: 30px; }}
-        table {{ width: 100%; border-collapse: collapse; margin-top: 12px; }}
-        th, td {{ padding: 10px; border-bottom: 1px solid #333; }}
-        tr:hover {{ background-color: #252525; }}
-        .key {{ background: #2a2a2a; padding: 4px 10px; border-radius: 4px; color: #50e3c2; font-family: monospace; }}
-    </style></head><body><h1>{dojo_name} Cheatsheet</h1>
-    """
+    import html  # to escape HTML characters safely
+
+    def format_keys(raw):
+        key_map = {
+            '^': 'Ctrl',
+            '⇧': 'Shift',
+            '⌥': 'Alt',
+            '⌘': 'Cmd',
+            '↵': 'Enter',
+            '⎋': 'Esc',
+            '⇥': 'Tab',
+            '←': 'Left',
+            '→': 'Right',
+            '↑': 'Up',
+            '↓': 'Down',
+            '␣': 'Space',
+            '+': '+'
+        }
+
+        parts = []
+        buffer = ""
+        for char in raw:
+            if char in key_map:
+                if buffer:
+                    parts.append(buffer)
+                    buffer = ""
+                parts.append(key_map[char])
+            else:
+                buffer += char
+        if buffer:
+            parts.append(buffer)
+
+        return ' '.join(f"<kbd>{html.escape(p.strip())}</kbd>" for p in parts if p.strip())
+
+    template_path = os.path.join("src", "template.html")
+    if not os.path.exists(template_path):
+        return f"<h1>Error: HTML template not found at {template_path}</h1>"
+
+    with open(template_path, "r", encoding="utf-8") as f:
+        template = f.read()
+
+    section_html = ""
     for section in cheatsheet:
-        html += f"<h2>{section['name']}</h2><table><tr><th>Key</th><th>Description</th></tr>"
+        rows = ""
         for cmd in section['commands']:
-            html += f"<tr><td><span class='key'>{cmd['key']}</span></td><td>{cmd['description']}</td></tr>"
-        html += "</table>"
-    return html + "</body></html>"
+            formatted_keys = format_keys(cmd['key'])
+            rows += f"<tr><td>{formatted_keys}</td><td>{html.escape(cmd['description'])}</td></tr>"
+        section_html += f"<h2>{html.escape(section['name'])}</h2><table><tr><th>Key</th><th>Description</th></tr>{rows}</table>"
+
+    filled = template.replace("{{ dojo_name }}", html.escape(dojo_name)).replace("{{ sections }}", section_html)
+    return filled
+
+
 
 def generate_markdown_content(cheatsheet, dojo_name):
     md = f"# {dojo_name} Cheatsheet\n\n"
@@ -150,7 +186,7 @@ def main():
         if cheatsheet:
             st.button("← Back", on_click=lambda: st.session_state.update({"current_page": "dashboard"}))
             st.markdown(f"### {name} Cheatsheet")
-            st.components.v1.html(generate_html_content(cheatsheet, name), height=600, scrolling=True)
+            st.components.v1.html(generate_html_content(cheatsheet, name), height=800, scrolling=True)
         else:
             st.error(f"Cheatsheet not found for {dojo_name}")
 
