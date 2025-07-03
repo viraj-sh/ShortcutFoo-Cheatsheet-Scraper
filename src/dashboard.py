@@ -11,9 +11,31 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    html, body, [class*="css"]  {
+    html, body, [class*="css"] {
         font-size: 20px !important;
+        scrollbar-color: #444 #1a1a1a;
+        scrollbar-width: thin;
     }
+
+    /* Scrollbar styling for modern browsers (Chrome, Edge, Safari) */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #444;
+        border-radius: 6px;
+        border: 2px solid #1a1a1a;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #666;
+    }
+
     .download-button {
         display: inline-block;
         padding: 8px 16px;
@@ -25,15 +47,18 @@ st.markdown("""
         font-size: 0.95rem;
         transition: background 0.2s ease;
     }
+
     .download-button:hover {
         background: #357ABD;
     }
+
     .download-button i {
         margin-right: 6px;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 """, unsafe_allow_html=True)
+
 
 @st.cache_data
 def load_dojos():
@@ -73,7 +98,7 @@ def get_placeholder_description(name):
     return f"Keyboard shortcuts and commands for {name}."
 
 def generate_html_content(cheatsheet, dojo_name):
-    import html  # to escape HTML characters safely
+    import html
 
     def format_keys(raw):
         key_map = {
@@ -124,6 +149,7 @@ def generate_html_content(cheatsheet, dojo_name):
 
     filled = template.replace("{{ dojo_name }}", html.escape(dojo_name)).replace("{{ sections }}", section_html)
     return filled
+
 
 
 
@@ -183,10 +209,16 @@ def main():
         dojos = load_dojos()
         name = dojos.get(dojo_name, dojo_name)
         cheatsheet = load_cheatsheet(dojo_name)
+        
         if cheatsheet:
             st.button("← Back", on_click=lambda: st.session_state.update({"current_page": "dashboard"}))
             st.markdown(f"### {name} Cheatsheet")
-            st.components.v1.html(generate_html_content(cheatsheet, name), height=800, scrolling=True)
+
+            html_content = generate_html_content(cheatsheet, name)
+            st.markdown(
+                html_content,
+                unsafe_allow_html=True
+            )
         else:
             st.error(f"Cheatsheet not found for {dojo_name}")
 
